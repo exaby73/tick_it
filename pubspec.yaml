@@ -1,0 +1,35 @@
+name: _
+publish_to: none
+
+environment:
+  sdk: ^3.6.0
+
+workspace:
+  - apps/backend
+
+dev_dependencies:
+  rps: ^0.9.1
+
+scripts:
+  backend:
+    gen:
+      $script: |
+        cd apps/backend
+        fvm dart run build_runner watch --delete-conflicting-outputs
+    gen:clean:
+      $script: |
+        (cd apps/backend && \
+          fvm dart run build_runner clean)
+        dart run rps backend gen
+    migrate:up:
+      $script: |
+        cd apps/backend 
+        fvm dart run bin/migrate.dart up
+    migrate:down:
+      $script: |
+        cd apps/backend
+        fvm dart run bin/migrate.dart down
+    serve:
+      $script: |
+        cd apps/backend
+        arcade serve
