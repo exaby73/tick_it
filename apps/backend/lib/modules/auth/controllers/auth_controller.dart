@@ -1,5 +1,6 @@
 import 'package:arcade/arcade.dart';
 import 'package:arcade_swagger/arcade_swagger.dart';
+import 'package:backend/modules/auth/dtos/refresh_dto.dart';
 import 'package:backend/modules/auth/dtos/signin_dto.dart';
 import 'package:backend/modules/auth/dtos/signup_dto.dart';
 import 'package:backend/modules/auth/services/auth_service.dart';
@@ -35,6 +36,17 @@ final class AuthController {
             )
             .post('/signin')
             .handle(_signin);
+
+        route()
+            .swagger(
+              tags: ['Auth'],
+              request: $RefreshRequestDtoSchema,
+              responses: {
+                '200': $SignupResponseDtoSchema,
+              },
+            )
+            .post('/refresh')
+            .handle(_refresh);
       },
     );
   }
@@ -48,5 +60,10 @@ final class AuthController {
   Future<SignupResponseDto> _signin(RequestContext context) async {
     final dto = await $SigninRequestDtoValidate.withLuthor(context);
     return _authService.signin(dto);
+  }
+
+  Future<SignupResponseDto> _refresh(RequestContext context) async {
+    final dto = await $RefreshRequestDtoValidate.withLuthor(context);
+    return _authService.refresh(dto);
   }
 }

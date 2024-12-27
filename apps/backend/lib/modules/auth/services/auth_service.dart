@@ -1,4 +1,5 @@
 import 'package:arcade/arcade.dart';
+import 'package:backend/modules/auth/dtos/refresh_dto.dart';
 import 'package:backend/modules/auth/dtos/signin_dto.dart';
 import 'package:backend/modules/auth/dtos/signup_dto.dart';
 import 'package:backend/modules/auth/models/jwt_payload.dart';
@@ -59,6 +60,16 @@ final class AuthService {
     final accessToken = _tokenService.generateAccessToken(payload);
     final refreshToken = _tokenService.generateRefreshToken(payload);
 
+    return SigninResponseDto(
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    );
+  }
+
+  Future<SigninResponseDto> refresh(RefreshRequestDto dto) async {
+    final payload = _tokenService.verifyRefreshToken(dto.refreshToken);
+    final accessToken = _tokenService.generateAccessToken(payload);
+    final refreshToken = _tokenService.generateRefreshToken(payload);
     return SigninResponseDto(
       accessToken: accessToken,
       refreshToken: refreshToken,
