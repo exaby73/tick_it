@@ -1,4 +1,5 @@
 import 'package:arcade/arcade.dart';
+import 'package:arcade_swagger/arcade_swagger.dart';
 import 'package:backend/modules/auth/dtos/signin_dto.dart';
 import 'package:backend/modules/auth/dtos/signup_dto.dart';
 import 'package:backend/modules/auth/services/auth_service.dart';
@@ -13,13 +14,33 @@ final class AuthController {
     route.group<RequestContext>(
       '/auth',
       defineRoutes: (route) {
-        route.post('/signup').handle(_signup);
-        route.post('/signin').handle(_signin);
+        route()
+            .swagger(
+              tags: ['Auth'],
+              request: $SignupRequestDtoSchema,
+              responses: {
+                '201': $SignupResponseDtoSchema,
+              },
+            )
+            .post('/signup')
+            .handle(_signup);
+
+        route()
+            .swagger(
+              tags: ['Auth'],
+              request: $SigninRequestDtoSchema,
+              responses: {
+                '200': $SignupResponseDtoSchema,
+              },
+            )
+            .post('/signin')
+            .handle(_signin);
       },
     );
   }
 
   Future<SignupResponseDto> _signup(RequestContext context) async {
+    context.statusCode = 201;
     final dto = await $SignupRequestDtoValidate.withLuthor(context);
     return _authService.signup(dto);
   }

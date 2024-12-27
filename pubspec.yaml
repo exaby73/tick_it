@@ -10,6 +10,9 @@ workspace:
 dev_dependencies:
   rps: ^0.9.1
 
+dependency_overrides:
+  http: ^0.13.3
+
 scripts:
   backend:
     gen:
@@ -33,3 +36,13 @@ scripts:
       $script: |
         cd apps/backend
         arcade serve
+  frontend:
+    gen:
+      $script: |
+        cd apps/frontend
+        fvm dart run build_runner watch --delete-conflicting-outputs
+    gen:clean:
+      $script: |
+        (cd apps/frontend && \
+          fvm dart run build_runner clean)
+        dart run rps frontend gen

@@ -7,7 +7,8 @@ environment:
   sdk: ">=3.6.0 <4.0.0"
 
 dependencies:
-  arcade: ^0.2.4+1
+  arcade: ^0.3.0
+  arcade_swagger: ^0.0.2
   dart_jsonwebtoken: ^2.14.2
   envied: ^1.0.0
   freezed_annotation: ^2.4.4
@@ -16,7 +17,7 @@ dependencies:
   hashlib: ^1.21.1
   injectable: ^2.5.0
   json_annotation: ^4.9.0
-  luthor: ^0.4.4
+  luthor: ^0.5.2
   postgres: ^3.4.7
   superclass: ^0.1.0
 
@@ -27,5 +28,5 @@ dev_dependencies:
   injectable_generator: ^2.6.2
   json_serializable: ^6.9.0
   lint: ^2.3.0
-  luthor_generator: 0.5.0
+  luthor_generator: 0.6.2
   superclass_generator: ^0.2.0

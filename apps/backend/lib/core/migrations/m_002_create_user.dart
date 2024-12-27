@@ -9,22 +9,22 @@ final class Migration002CreateUser extends Migration {
   @override
   Future<void> up() async {
     await _db.execute('''
-CREATE TABLE users (
-  id BIGSERIAL PRIMARY KEY,
-  name TEXT,
-  email TEXT NOT NULL UNIQUE,
-  password TEXT NOT NULL,
-  createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-  updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
-)
-''');
+      CREATE TABLE users (
+        id BIGSERIAL PRIMARY KEY,
+        name TEXT,
+        email TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+      )
+    ''');
 
     await _db.execute('''
-CREATE TRIGGER update_users_updated_at
-BEFORE UPDATE ON users
-FOR EACH ROW
-EXECUTE FUNCTION update_modified_column()
-''');
+      CREATE TRIGGER update_users_updated_at
+      BEFORE UPDATE ON users
+      FOR EACH ROW
+      EXECUTE FUNCTION update_modified_column()
+    ''');
   }
 
   @override

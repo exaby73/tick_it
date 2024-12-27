@@ -20,6 +20,7 @@ class __User with _$_User {
 
 @Superclass(
   includeJsonSerialization: true,
+  fieldAnnotations: {...Timestamps.fieldAnnotations},
   apply: [
     Merge<__User, __User>(),
     ...Timestamps.apply,

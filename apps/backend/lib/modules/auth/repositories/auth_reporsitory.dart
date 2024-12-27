@@ -1,4 +1,5 @@
 import 'package:backend/modules/auth/models/user.dart';
+import 'package:backend/shared/utils/pretty_print.dart';
 import 'package:injectable/injectable.dart';
 import 'package:postgres/postgres.dart';
 

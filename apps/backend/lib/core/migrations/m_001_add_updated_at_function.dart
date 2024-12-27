@@ -10,14 +10,14 @@ final class Migration001AddUpdatedAtFunction extends Migration {
   @override
   Future<void> up() async {
     await _db.execute(r'''
-CREATE OR REPLACE FUNCTION update_modified_column()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updatedAt = now();
-    RETURN NEW;
-END;
-$$ language 'plpgsql';
-''');
+      CREATE OR REPLACE FUNCTION update_modified_column()
+      RETURNS TRIGGER AS $$
+      BEGIN
+          NEW.updatedAt = now();
+          RETURN NEW;
+      END;
+      $$ language 'plpgsql';
+    ''');
   }
 
   @override
