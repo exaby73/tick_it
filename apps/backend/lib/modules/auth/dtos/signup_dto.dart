@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:luthor/luthor.dart';
 
 part 'signup_dto.freezed.dart';
+
 part 'signup_dto.g.dart';
 
 @luthor
@@ -17,14 +18,3 @@ class SignupRequestDto with _$SignupRequestDto {
       _$SignupRequestDtoFromJson(json);
 }
 
-@luthor
-@freezed
-class SignupResponseDto with _$SignupResponseDto {
-  const factory SignupResponseDto({
-    required String accessToken,
-    required String refreshToken,
-  }) = _SignupResponseDto;
-
-  factory SignupResponseDto.fromJson(Map<String, dynamic> json) =>
-      _$SignupResponseDtoFromJson(json);
-}

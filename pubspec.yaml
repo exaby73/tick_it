@@ -6,6 +6,7 @@ environment:
 
 workspace:
   - apps/backend
+  - apps/frontend
 
 dev_dependencies:
   rps: ^0.9.1
@@ -22,11 +23,11 @@ scripts:
     gen:clean:
       $script: |
         (cd apps/backend && \
-          fvm dart run build_runner clean)
-        dart run rps backend gen
+          fvm dart run build_runner clean) && \
+          dart run rps backend gen
     migrate:up:
       $script: |
-        cd apps/backend 
+        cd apps/backend
         fvm dart run bin/migrate.dart up
     migrate:down:
       $script: |
@@ -40,9 +41,12 @@ scripts:
     gen:
       $script: |
         cd apps/frontend
-        fvm dart run build_runner watch --delete-conflicting-outputs
+        rm -rf lib/api
+        fvm dart run bin/download_swagger.dart && \
+          fvm dart run swagger_parser && \
+          fvm dart run build_runner watch --delete-conflicting-outputs
     gen:clean:
       $script: |
         (cd apps/frontend && \
-          fvm dart run build_runner clean)
-        dart run rps frontend gen
+          fvm dart run build_runner clean) && \
+          dart run rps frontend gen

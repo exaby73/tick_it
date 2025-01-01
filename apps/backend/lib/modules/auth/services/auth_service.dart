@@ -1,4 +1,6 @@
 import 'package:arcade/arcade.dart';
+import 'package:backend/modules/auth/dtos/auth_response_dto.dart';
+import 'package:backend/modules/auth/dtos/auth_response_dto.dart';
 import 'package:backend/modules/auth/dtos/refresh_dto.dart';
 import 'package:backend/modules/auth/dtos/signin_dto.dart';
 import 'package:backend/modules/auth/dtos/signup_dto.dart';
@@ -21,7 +23,7 @@ final class AuthService {
     this._tokenService,
   );
 
-  Future<SignupResponseDto> signup(SignupRequestDto dto) async {
+  Future<AuthResponseDto> signup(SignupRequestDto dto) async {
     final userExists = await _authRepository.userExistsByEmail(dto.email);
     if (userExists) {
       throw const ConflictException(message: 'User already exists');
@@ -39,13 +41,13 @@ final class AuthService {
     final accessToken = _tokenService.generateAccessToken(payload);
     final refreshToken = _tokenService.generateRefreshToken(payload);
 
-    return SignupResponseDto(
+    return AuthResponseDto(
       accessToken: accessToken,
       refreshToken: refreshToken,
     );
   }
 
-  Future<SigninResponseDto> signin(SigninRequestDto dto) async {
+  Future<AuthResponseDto> signin(SigninRequestDto dto) async {
     final user = await _authRepository.getUserByEmail(dto.email);
     if (user == null) {
       throw const NotFoundException(message: 'User not found');
@@ -60,17 +62,17 @@ final class AuthService {
     final accessToken = _tokenService.generateAccessToken(payload);
     final refreshToken = _tokenService.generateRefreshToken(payload);
 
-    return SigninResponseDto(
+    return AuthResponseDto(
       accessToken: accessToken,
       refreshToken: refreshToken,
     );
   }
 
-  Future<SigninResponseDto> refresh(RefreshRequestDto dto) async {
+  Future<AuthResponseDto> refresh(RefreshRequestDto dto) async {
     final payload = _tokenService.verifyRefreshToken(dto.refreshToken);
     final accessToken = _tokenService.generateAccessToken(payload);
     final refreshToken = _tokenService.generateRefreshToken(payload);
-    return SigninResponseDto(
+    return AuthResponseDto(
       accessToken: accessToken,
       refreshToken: refreshToken,
     );

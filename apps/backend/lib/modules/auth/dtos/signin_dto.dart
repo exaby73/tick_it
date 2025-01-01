@@ -16,5 +16,3 @@ class SigninRequestDto with _$SigninRequestDto {
   factory SigninRequestDto.fromJson(Map<String, dynamic> json) =>
       _$SigninRequestDtoFromJson(json);
 }
-
-typedef SigninResponseDto = SignupResponseDto;

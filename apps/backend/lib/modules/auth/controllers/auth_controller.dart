@@ -1,5 +1,6 @@
 import 'package:arcade/arcade.dart';
 import 'package:arcade_swagger/arcade_swagger.dart';
+import 'package:backend/modules/auth/dtos/auth_response_dto.dart';
 import 'package:backend/modules/auth/dtos/refresh_dto.dart';
 import 'package:backend/modules/auth/dtos/signin_dto.dart';
 import 'package:backend/modules/auth/dtos/signup_dto.dart';
@@ -20,7 +21,7 @@ final class AuthController {
               tags: ['Auth'],
               request: $SignupRequestDtoSchema,
               responses: {
-                '201': $SignupResponseDtoSchema,
+                '201': $AuthResponseDtoSchema,
               },
             )
             .post('/signup')
@@ -31,7 +32,7 @@ final class AuthController {
               tags: ['Auth'],
               request: $SigninRequestDtoSchema,
               responses: {
-                '200': $SignupResponseDtoSchema,
+                '200': $AuthResponseDtoSchema,
               },
             )
             .post('/signin')
@@ -42,7 +43,7 @@ final class AuthController {
               tags: ['Auth'],
               request: $RefreshRequestDtoSchema,
               responses: {
-                '200': $SignupResponseDtoSchema,
+                '200': $AuthResponseDtoSchema,
               },
             )
             .post('/refresh')
@@ -51,18 +52,18 @@ final class AuthController {
     );
   }
 
-  Future<SignupResponseDto> _signup(RequestContext context) async {
+  Future<AuthResponseDto> _signup(RequestContext context) async {
     context.statusCode = 201;
     final dto = await $SignupRequestDtoValidate.withLuthor(context);
     return _authService.signup(dto);
   }
 
-  Future<SignupResponseDto> _signin(RequestContext context) async {
+  Future<AuthResponseDto> _signin(RequestContext context) async {
     final dto = await $SigninRequestDtoValidate.withLuthor(context);
     return _authService.signin(dto);
   }
 
-  Future<SignupResponseDto> _refresh(RequestContext context) async {
+  Future<AuthResponseDto> _refresh(RequestContext context) async {
     final dto = await $RefreshRequestDtoValidate.withLuthor(context);
     return _authService.refresh(dto);
   }

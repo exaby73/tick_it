@@ -2,27 +2,57 @@ name: frontend
 description: "A new Flutter project."
 publish_to: "none"
 version: 0.1.0
+resolution: workspace
 
 environment:
   sdk: ^3.6.0
 
 dependencies:
   auto_route: ^9.2.2
+  dio: ^5.7.0
+  dotenv: ^4.2.0
   envied: ^1.0.0
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.6
+  flutter_hooks: ^0.20.5
+  freezed_annotation: ^2.4.4
   get_it: ^8.0.3
+  hydrated_bloc: ^9.1.5
   injectable: ^2.5.0
-  luthor: ^0.4.4
+  json_annotation: ^4.9.0
+  luthor: ^0.5.2
+  path_provider: ^2.1.5
+  retrofit: ^4.4.1
   shadcn_ui: ^0.16.3
+  swagger_parser: ^1.20.1
+
+dependency_overrides:
+  meta: any
+  path: 1.9.0
 
 dev_dependencies:
   auto_route_generator: ^9.0.0
   build_runner: ^2.4.14
   envied_generator: ^1.0.0
+  freezed: ^2.5.7
   injectable_generator: ^2.6.2
+  json_serializable: ^6.9.0
   lint: ^2.3.0
-  luthor_generator: ^0.5.0
+  luthor_generator: ^0.6.0
+  retrofit_generator: ^9.1.5
 
 flutter:
   uses-material-design: true
+
+swagger_parser:
+  schema_path: ./swagger/swagger.json
+  json_serializer: freezed
+  path_method_name: true
+  enums_to_json: true
+  output_directory: lib/api
+  replacement_rules:
+    - pattern: "[0-9]+"
+      replacement: ""
+    - pattern: "Dto"
+      replacement: ""
