@@ -1,4 +1,3 @@
-import 'package:backend/modules/auth/dtos/signup_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:luthor/luthor.dart';
 
